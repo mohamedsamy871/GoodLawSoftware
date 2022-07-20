@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodLawSoftware", "GoodLawSoftware\GoodLawSoftware.csproj", "{A7443074-0090-448F-AEC9-44FE87E06AF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7443074-0090-448F-AEC9-44FE87E06AF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7443074-0090-448F-AEC9-44FE87E06AF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7443074-0090-448F-AEC9-44FE87E06AF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7443074-0090-448F-AEC9-44FE87E06AF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D5900E8F-107F-406C-8A06-87DC7FEA5D84}
+	EndGlobalSection
+EndGlobal
