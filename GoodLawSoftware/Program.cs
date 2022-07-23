@@ -1,4 +1,6 @@
+using Core.Interfaces;
 using Infrastructure;
+using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<DataContext>();
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 var app = builder.Build();
 
