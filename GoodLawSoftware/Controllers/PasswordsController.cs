@@ -19,11 +19,6 @@ namespace GoodLawSoftware.Controllers
             return View(_passwordItem.Entity.GetAll().ToList());
         }
 
-        // GET: PasswordsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
 
         // GET: PasswordsController/Create
         public ActionResult Create()
@@ -35,10 +30,12 @@ namespace GoodLawSoftware.Controllers
         // POST: PasswordsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(PasswordItem passwordItem)
         {
             try
             {
+                _passwordItem.Entity.Add(passwordItem);
+                _passwordItem.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -50,16 +47,18 @@ namespace GoodLawSoftware.Controllers
         // GET: PasswordsController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(_passwordItem.Entity.GetById(id));
         }
 
         // POST: PasswordsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(PasswordItem passwordItem)
         {
             try
             {
+                _passwordItem.Entity.Update(passwordItem);
+                _passwordItem.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -67,26 +66,19 @@ namespace GoodLawSoftware.Controllers
                 return View();
             }
         }
-
-        // GET: PasswordsController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
-
-        // POST: PasswordsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
             try
             {
+                _passwordItem.Entity.Delete(id);
+                _passwordItem.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
+
     }
 }
