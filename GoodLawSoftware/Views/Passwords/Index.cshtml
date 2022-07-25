@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-12">
-        <a class="btn btn-primary" asp-action="Create" asp-controller="Passwords">
+        <a class="btn btn-primary mt-3 mb-4" asp-action="Create" asp-controller="Passwords">
             Add Password
         </a>
     </div>
@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Password For</th>
-                        <th scope="col">Password</th>
+                        <th scope="col">User Name</th>
                         <th scope="col">Remarks</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -29,9 +29,9 @@
                         <tr>
                             <td id="test">@item.Name</td>
                             <td class="pass">
-                                &#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;&#x2022;
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#show-@item.Id">
-                                        Show
+                                @item.UserName
+                                <button type="button" class="ms-3 btn btn-warning" data-bs-toggle="modal" data-bs-target="#show-@item.Id">
+                                        <i class="fa-solid fa-eye"></i>
                                 </button>
                                 <!-- Modal -->
                                 <div class="modal fade" id="show-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -55,15 +55,15 @@
                             <td>
                                 <div class="actions-container">
                                     <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete-@item.Name">
-                                        Delete
+                                    <button type="button" class="btn btn-danger me-2" data-bs-toggle="modal" data-bs-target="#delete-@item.Id">
+                                        <i class="fa-solid fa-trash"></i>
                                     </button>
                                     <a class="btn btn-success" asp-action="Edit" asp-route-id="@item.Id">
-                                        Edit
+                                        <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                 </div>
                                 <!-- Modal -->
-                                <div class="modal fade" id="delete-@item.Name" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="delete-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
