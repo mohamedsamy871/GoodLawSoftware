@@ -1,6 +1,6 @@
 ﻿@model Core.Entities.PasswordItem
 
- <form asp-action="Create">
+ <form asp-action="Create" asp-controller="Passwords">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="mt-5 mb-4">
         <label asp-for="Name" class="control-label"></label>
@@ -14,7 +14,7 @@
     </div>
     <div class="mb-4">
         <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" class="form-control" min="0" max="1"/>
+        <input asp-for="Password" class="form-control" min="0" max="1" type="password"/>
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="mb-4">

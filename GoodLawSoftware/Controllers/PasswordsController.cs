@@ -2,7 +2,7 @@
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using GoodLawSoftware.Helpers;
 namespace GoodLawSoftware.Controllers
 {
     public class PasswordsController : Controller
@@ -16,7 +16,12 @@ namespace GoodLawSoftware.Controllers
         // GET: PasswordsController
         public ActionResult Index()
         {
-            return View(_passwordItem.Entity.GetAll().ToList());
+            var loginItem = _passwordItem.Entity.GetAll().ToList();
+            foreach(var item in loginItem)
+            {
+                item.Password = EncryptionManager.Decrypt(item.Password);
+            }
+            return View(loginItem);
         }
 
 
@@ -32,6 +37,8 @@ namespace GoodLawSoftware.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(PasswordItem passwordItem)
         {
+            var encryptedPassword = EncryptionManager.Encrypt(passwordItem.Password);
+            passwordItem.Password = encryptedPassword;
             try
             {
                 _passwordItem.Entity.Add(passwordItem);
@@ -47,7 +54,9 @@ namespace GoodLawSoftware.Controllers
         // GET: PasswordsController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(_passwordItem.Entity.GetById(id));
+            var loginItem = _passwordItem.Entity.GetById(id);
+            loginItem.Password = EncryptionManager.Decrypt(loginItem.Password);
+            return View(loginItem);
         }
 
         // POST: PasswordsController/Edit/5
@@ -55,6 +64,8 @@ namespace GoodLawSoftware.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(PasswordItem passwordItem)
         {
+            var encryptedPassword = EncryptionManager.Encrypt(passwordItem.Password);
+            passwordItem.Password = encryptedPassword;
             try
             {
                 _passwordItem.Entity.Update(passwordItem);
