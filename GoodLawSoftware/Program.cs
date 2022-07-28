@@ -28,7 +28,7 @@ try
         options.UseSqlServer(connectionString));
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-        .AddEntityFrameworkStores<DataContext>();
+        .AddRoles<IdentityRole>().AddEntityFrameworkStores<DataContext>();
     builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
     builder.Services.AddScoped<IValidator<LoginItem>, LoginItemValidator>();
 

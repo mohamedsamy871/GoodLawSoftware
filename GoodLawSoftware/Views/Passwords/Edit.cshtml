@@ -4,22 +4,22 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="mt-5 mb-4">
         <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" min="0" max="1"/>
+        <input asp-for="Name" class="form-control"/>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="mb-4">
         <label asp-for="UserName" class="control-label"></label>
-        <input asp-for="UserName" class="form-control" min="0" max="1"/>
+        <input asp-for="UserName" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="mb-4">
         <label asp-for="Password" class="control-label"></label>
-        <input asp-for="Password" class="form-control" min="0" max="1"/>
+        <input asp-for="Password" class="form-control"/>
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="mb-4">
         <label asp-for="Remarks" class="control-label"></label>
-        <input asp-for="Remarks" class="form-control" min="0" max="1"/>
+        <input asp-for="Remarks" class="form-control"/>
         <span asp-validation-for="Remarks" class="text-danger"></span>
     </div>
     <input type="hidden" value="@Model.Id" asp-for="Id" />

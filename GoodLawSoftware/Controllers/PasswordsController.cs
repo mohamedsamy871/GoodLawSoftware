@@ -5,22 +5,24 @@ using GoodLawSoftware.Helpers;
 using FluentValidation;
 using FluentValidation.Results;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GoodLawSoftware.Controllers
 {
+    [Authorize(Roles = "Adminstrator")]
     public class PasswordsController : Controller
     {
         private readonly IUnitOfWork<LoginItem> _loginItem;
         private readonly ILogger<PasswordsController> _logger;
         private readonly IValidator<LoginItem> _validator;
-
+         
         public PasswordsController(IUnitOfWork<LoginItem> loginItem,ILogger<PasswordsController> logger,IValidator<LoginItem> validator)
         {
             _loginItem = loginItem;
             _logger = logger;
             _validator = validator;
         }
-        // GET: PasswordsController
+
         public ActionResult Index()
         {
             var loginItem = _loginItem.Entity.GetAll().ToList();
@@ -31,13 +33,11 @@ namespace GoodLawSoftware.Controllers
             return View(loginItem);
         }
 
-        // GET: PasswordsController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: PasswordsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(LoginItem loginItem)
@@ -55,7 +55,6 @@ namespace GoodLawSoftware.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: PasswordsController/Edit/5
         public ActionResult Edit(int id)
         {
             var loginItem = _loginItem.Entity.GetById(id);
@@ -63,7 +62,6 @@ namespace GoodLawSoftware.Controllers
             return View(loginItem);
         }
 
-        // POST: PasswordsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(LoginItem loginItem)
