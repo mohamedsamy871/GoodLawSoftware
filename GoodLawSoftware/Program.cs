@@ -15,8 +15,9 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
     // Add services to the container.
-
-    builder.Host.UseSerilog();
+    builder.Host.UseSerilog((context,services,configuration)=>configuration
+    .ReadFrom.Configuration(context.Configuration).ReadFrom.Services(services)
+    .Enrich.FromLogContext());
     builder.Logging.AddSerilog();
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     builder.Services.AddDbContext<DataContext>(options =>
@@ -28,6 +29,10 @@ try
     builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     var app = builder.Build();
+    app.UseSerilogRequestLogging(configure =>
+    {
+        configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.000} ms";
+    });
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
