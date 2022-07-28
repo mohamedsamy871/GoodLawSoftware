@@ -2,17 +2,23 @@
 using Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using GoodLawSoftware.Helpers;
+using FluentValidation;
+using FluentValidation.Results;
+using FluentValidation.AspNetCore;
+
 namespace GoodLawSoftware.Controllers
 {
     public class PasswordsController : Controller
     {
         private readonly IUnitOfWork<LoginItem> _loginItem;
         private readonly ILogger<PasswordsController> _logger;
+        private readonly IValidator<LoginItem> _validator;
 
-        public PasswordsController(IUnitOfWork<LoginItem> loginItem,ILogger<PasswordsController> logger)
+        public PasswordsController(IUnitOfWork<LoginItem> loginItem,ILogger<PasswordsController> logger,IValidator<LoginItem> validator)
         {
             _loginItem = loginItem;
             _logger = logger;
+            _validator = validator;
         }
         // GET: PasswordsController
         public ActionResult Index()
@@ -38,16 +44,15 @@ namespace GoodLawSoftware.Controllers
         {
             var encryptedPassword = EncryptionManager.Encrypt(loginItem.Password);
             loginItem.Password = encryptedPassword;
-            try
+            ValidationResult result = _validator.Validate(loginItem);
+            if (!result.IsValid)
             {
-                _loginItem.Entity.Add(loginItem);
-                _loginItem.Save();
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+                result.AddToModelState(ModelState, null);
                 return View();
             }
+            _loginItem.Entity.Add(loginItem);
+            _loginItem.Save();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PasswordsController/Edit/5

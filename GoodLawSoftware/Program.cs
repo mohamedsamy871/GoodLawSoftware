@@ -1,11 +1,15 @@
+using Core.Entities;
 using Core.Interfaces;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using GoodLawSoftware.Helpers;
 using Infrastructure;
 using Infrastructure.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
-
+using System.Reflection;
 
 Log.Logger = new LoggerConfiguration().MinimumLevel.Override("Microsoft",LogEventLevel.Information)
     .Enrich.FromLogContext()
@@ -25,10 +29,12 @@ try
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
     builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddEntityFrameworkStores<DataContext>();
-    builder.Services.AddControllersWithViews();
     builder.Services.AddScoped(typeof(IUnitOfWork<>), typeof(UnitOfWork<>));
+    builder.Services.AddScoped<IValidator<LoginItem>, LoginItemValidator>();
+
     builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     var app = builder.Build();
+    
     app.UseSerilogRequestLogging(configure =>
     {
         configure.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.000} ms";
