@@ -12,12 +12,9 @@ namespace GoodLawSoftware.Controllers
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             return RedirectToAction("Index","Passwords");
         }
-
-        
     }
 }

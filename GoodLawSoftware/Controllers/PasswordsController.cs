@@ -1,6 +1,5 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using GoodLawSoftware.Helpers;
 namespace GoodLawSoftware.Controllers
@@ -8,10 +7,12 @@ namespace GoodLawSoftware.Controllers
     public class PasswordsController : Controller
     {
         private readonly IUnitOfWork<PasswordItem> _passwordItem;
+        private readonly ILogger<PasswordsController> _logger;
 
-        public PasswordsController(IUnitOfWork<PasswordItem> passwordItem)
+        public PasswordsController(IUnitOfWork<PasswordItem> passwordItem,ILogger<PasswordsController> logger)
         {
             _passwordItem = passwordItem;
+            _logger = logger;
         }
         // GET: PasswordsController
         public ActionResult Index()
@@ -24,11 +25,9 @@ namespace GoodLawSoftware.Controllers
             return View(loginItem);
         }
 
-
         // GET: PasswordsController/Create
         public ActionResult Create()
         {
-
             return View();
         }
 
