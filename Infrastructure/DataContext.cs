@@ -20,6 +20,6 @@ namespace Infrastructure
         {
         }
 
-        public DbSet<PasswordItem> PasswordItem { get; set; }
+        public DbSet<LoginItem> LoginItems { get; set; }
     }
 }

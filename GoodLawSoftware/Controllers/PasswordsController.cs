@@ -6,18 +6,18 @@ namespace GoodLawSoftware.Controllers
 {
     public class PasswordsController : Controller
     {
-        private readonly IUnitOfWork<PasswordItem> _passwordItem;
+        private readonly IUnitOfWork<LoginItem> _loginItem;
         private readonly ILogger<PasswordsController> _logger;
 
-        public PasswordsController(IUnitOfWork<PasswordItem> passwordItem,ILogger<PasswordsController> logger)
+        public PasswordsController(IUnitOfWork<LoginItem> loginItem,ILogger<PasswordsController> logger)
         {
-            _passwordItem = passwordItem;
+            _loginItem = loginItem;
             _logger = logger;
         }
         // GET: PasswordsController
         public ActionResult Index()
         {
-            var loginItem = _passwordItem.Entity.GetAll().ToList();
+            var loginItem = _loginItem.Entity.GetAll().ToList();
             foreach(var item in loginItem)
             {
                 item.Password = EncryptionManager.Decrypt(item.Password);
@@ -34,14 +34,14 @@ namespace GoodLawSoftware.Controllers
         // POST: PasswordsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(PasswordItem passwordItem)
+        public ActionResult Create(LoginItem loginItem)
         {
-            var encryptedPassword = EncryptionManager.Encrypt(passwordItem.Password);
-            passwordItem.Password = encryptedPassword;
+            var encryptedPassword = EncryptionManager.Encrypt(loginItem.Password);
+            loginItem.Password = encryptedPassword;
             try
             {
-                _passwordItem.Entity.Add(passwordItem);
-                _passwordItem.Save();
+                _loginItem.Entity.Add(loginItem);
+                _loginItem.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -53,7 +53,7 @@ namespace GoodLawSoftware.Controllers
         // GET: PasswordsController/Edit/5
         public ActionResult Edit(int id)
         {
-            var loginItem = _passwordItem.Entity.GetById(id);
+            var loginItem = _loginItem.Entity.GetById(id);
             loginItem.Password = EncryptionManager.Decrypt(loginItem.Password);
             return View(loginItem);
         }
@@ -61,14 +61,14 @@ namespace GoodLawSoftware.Controllers
         // POST: PasswordsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(PasswordItem passwordItem)
+        public ActionResult Edit(LoginItem loginItem)
         {
-            var encryptedPassword = EncryptionManager.Encrypt(passwordItem.Password);
-            passwordItem.Password = encryptedPassword;
+            var encryptedPassword = EncryptionManager.Encrypt(loginItem.Password);
+            loginItem.Password = encryptedPassword;
             try
             {
-                _passwordItem.Entity.Update(passwordItem);
-                _passwordItem.Save();
+                _loginItem.Entity.Update(loginItem);
+                _loginItem.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -80,8 +80,8 @@ namespace GoodLawSoftware.Controllers
         {
             try
             {
-                _passwordItem.Entity.Delete(id);
-                _passwordItem.Save();
+                _loginItem.Entity.Delete(id);
+                _loginItem.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch

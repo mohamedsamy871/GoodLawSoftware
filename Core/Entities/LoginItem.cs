@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Core.Entities
 {
-    public class PasswordItem
+    public class LoginItem
     {
         public int Id { get; set; }
         public string Name { get; set; }
